@@ -99,3 +99,80 @@ TEST(PasswordTest, has_mixed_case_numbers_and_symbols_password)
 	bool actual = my_password.has_mixed_case("pass123*#%");
 	ASSERT_FALSE(actual);
 }
+
+//-----------------------------------------------------------------------
+
+TEST(PasswordTest, smoke_test)
+{
+    ASSERT_TRUE( 1 == 1 );
+}
+
+TEST(PasswordTest, valid_set)
+{
+	Password my_password;
+	bool actual = my_password.set("NewPass12345");
+	ASSERT_TRUE(actual);
+}
+
+TEST(PasswordTest, small_size_set)
+{
+	Password my_password;
+	bool actual = my_password.set("Pass");
+	ASSERT_FALSE(actual);
+}
+
+TEST(PasswordTest, large_size_set)
+{
+	Password my_password;
+	bool actual = my_password.set("asdfasdfasdfasdfasdfasdfasdf");
+	ASSERT_FALSE(actual);
+}
+
+TEST(PasswordTest, no_mixed_set)
+{
+	Password my_password;
+	bool actual = my_password.set("pass");
+	ASSERT_FALSE(actual);
+}
+
+TEST(PasswordTest, no_mixed_set2)
+{
+	Password my_password;
+	bool actual = my_password.set("passpass123");
+	ASSERT_FALSE(actual);
+}
+
+TEST(PasswordTest, empty_set)
+{
+	Password my_password;
+	bool actual = my_password.set("");
+	ASSERT_FALSE(actual);
+}
+
+TEST(PasswordTest, duplicate_set)
+{
+	Password my_password;
+	bool actual = my_password.set("ChicoCA-95929");
+	ASSERT_FALSE(actual);
+}
+
+TEST(PasswordTest, valid_auth)
+{
+	Password my_password;
+	bool actual = my_password.authenticate("ChicoCA-95929");
+	ASSERT_TRUE(actual);
+}
+
+TEST(PasswordTest, invalid_auth)
+{
+	Password my_password;
+	bool actual = my_password.authenticate("TracyCA-95929");
+	ASSERT_FALSE(actual);
+}
+
+TEST(PasswordTest, invalid_auth2)
+{
+	Password my_password;
+	bool actual = my_password.authenticate("");
+	ASSERT_FALSE(actual);
+}
